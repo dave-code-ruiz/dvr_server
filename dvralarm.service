@@ -1,0 +1,13 @@
+[Service]
+WorkingDirectory=/home/homeassistant/.homeassistant/shell_commands
+ExecStart=/usr/bin/perl /home/homeassistant/.homeassistant/shell_commands/dvralarmserver.pl
+Restart=always
+StandardOutput=syslog
+StandardError=syslog
+User=root
+Group=root
+Environment=NODE_ENV=production
+
+[Install]
+WantedBy=multi-user.target
+
