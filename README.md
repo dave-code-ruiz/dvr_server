@@ -10,6 +10,11 @@ PBFZ TCV-UTH200
 
 http://www.aliexpress.com/item/Free-shipping-2014-NEW-IP-camera-CCTV-2-0MP-HD-1080P-IP-Network-Security-CCTV-Waterproof/1958962188.html
 
+Jienio Audio Poe Ip Cámara 1080 p HD Cctv
+
+https://es.aliexpress.com/item/33052006803.html?spm=a2g0s.9042311.0.0.758f63c02eLfuS
+
+
 # Install perl and cpan
 
 sudo apt-get install perl
