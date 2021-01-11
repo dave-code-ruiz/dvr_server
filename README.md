@@ -26,9 +26,16 @@ sudo systemctl start dvralarm.service
 # home assistant configuration.yaml
 
 binary_sensor:
+
   - platform: mqtt
+  
     name: movimiento_camera
+    
     device_class: motion
+    
     state_topic: "home-assistant/camera/movimiento"
+    
     payload_on: "ON"
+    
     off_delay: 30
+    
