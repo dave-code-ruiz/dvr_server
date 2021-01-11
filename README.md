@@ -10,13 +10,17 @@ http://www.aliexpress.com/item/Free-shipping-2014-NEW-IP-camera-CCTV-2-0MP-HD-10
 # Install perl and cpan
 
 sudo apt-get install perl
+
 sudo cpan JSON
+
 sudo cpan Net::MQTT::Simple
 
 # Install service
 
 sudo systemctl daemon-reload
+
 sudo systemctl enable dvralarm.service
+
 sudo systemctl start dvralarm.service
 
 # home assistant configuration.yaml
