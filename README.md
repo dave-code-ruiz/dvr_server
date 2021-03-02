@@ -14,6 +14,9 @@ Jienio Audio Poe Ip Cámara 1080 p HD Cctv
 
 https://es.aliexpress.com/item/33052006803.html?spm=a2g0s.9042311.0.0.758f63c02eLfuS
 
+BESDER-cámara IP
+
+https://es.aliexpress.com/item/32831727674.html?spm=a2g0s.9042311.0.0.c48163c0vJgnYH
 
 # Install perl and cpan
 
@@ -41,7 +44,7 @@ binary_sensor:
     
     device_class: motion
     
-    state_topic: "home-assistant/camera/movimiento"
+    state_topic: "home-assistant/[ipofcamera]/movimiento"
     
     payload_on: "ON"
     
