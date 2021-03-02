@@ -8,9 +8,6 @@
 #
 # PBFZ TCV-UTH200
 # http://www.aliexpress.com/item/Free-shipping-2014-NEW-IP-camera-CCTV-2-0MP-HD-1080P-IP-Network-Security-CCTV-Waterproof/1958962188.html
-#
-#
-
 
 use IO::Socket;
 use IO::Socket::INET;
@@ -30,34 +27,35 @@ delete @ENV{qw(IFS CDPATH ENV BASH_ENV)};
 
 sub BuildPacket {
  my ($type, $params) = ($_[0], $_[1]);
-
-
+ 
+ 
  my @pkt_prefix_1;
  my @pkt_prefix_2;
  my @pkt_type;
  my $sid = 0;
  my $json = JSON->new;
 
-
+ 
  @pkt_prefix_1 = (0xff, 0x00, 0x00, 0x00);
- @pkt_prefix_2 =  (0x00, 0x00, 0x00, 0x00);
-
+ @pkt_prefix_2 =  (0x00, 0x00, 0x00, 0x00); 
+ 
  if ($type eq 'login') {
 
    @pkt_type = (0x00, 0x00, 0xe8, 0x03);
-
+   
  } elsif ($type eq 'info') {
    @pkt_type = (0x00, 0x00, 0xfc, 0x03);
  }
-
+ 
  $sid = hex($params->{'SessionID'});
-
+ 
  my $pkt_prefix_data =  pack('c*', @pkt_prefix_1) . pack('i', $sid) . pack('c*', @pkt_prefix_2). pack('c*', @pkt_type);
 
  my $pkt_params_data =  $json->encode($params);
+
  
  my $pkt_data = $pkt_prefix_data . pack('i', length($pkt_params_data)) . $pkt_params_data;
-
+ 
  return $pkt_data;
 
 }
@@ -66,7 +64,7 @@ sub GetReplyHead {
 
 
  my $sock = $_[0];
-
+ 
  my @reply_head_array;
 
  for (my $i = 0; $i < 5; $i++) {
@@ -74,11 +72,11 @@ sub GetReplyHead {
   $reply_head[$i]  = unpack('i', $data);
 
   print OUT $data;
-
-
+ 
+ 
   #print "$i: " . $reply_head[$i] . "\n";
  }
-
+ 
  my $reply_head = {
   Prefix1 => $reply_head[0],
   Prefix2 => $reply_head[1],
@@ -86,7 +84,7 @@ sub GetReplyHead {
   Prefix4 => $reply_head[3],
   Content_Length => $reply_head[4]
  };
-
+ 
  return $reply_head;
 }
 
@@ -94,33 +92,38 @@ sub GetReplyHead {
 my $sock = new IO::Socket::INET ( LocalHost => '0.0.0.0', LocalPort => '15002', Proto => 'tcp',  Listen => 1, Reuse => 1 ); die "Could not create socket: $!\n" unless $sock;
 
 while (my ($client,$clientaddr) = $sock->accept()) {
-
- write_log("Connected from ".$client->peerhost());
+ 
+#  write_log("Connected from ".$client->peerhost());
  $pid = fork();
-
+ 
  die "Cannot fork: $!" unless defined($pid);
-
- if ($pid == 0) {
+ 
+ if ($pid == 0) { 
         # Child process
-                my $data = '';
+		my $data = '';
+		
 
+        
         my $reply = GetReplyHead($client);
         
-                # Client protocol detection
-                $client->recv($data, $reply->{'Content_Length'});
+		# Client protocol detection
+		$client->recv($data, $reply->{'Content_Length'});
 
         print Dumper decode_json($data);
-
-
-                my $cproto = $data;
-
-                write_log($client->peerhost() . " proto = '$cproto'");
-
-
-
-
-
-        exit(0);   # Child process exits when it is done.
+        
+		
+		my $cproto = $data;
+		
+		write_log("Connected from ".$client->peerhost() . " proto = '$cproto'");
+		
+    # if (index($cproto, "Start") != -1) {
+		#   mqtt($client->peerhost(), "ON");
+    # }
+		if (index($cproto, "Stop") == -1) {
+		  mqtt($client->peerhost(), "ON");
+    }
+		
+    exit(0);   # Child process exits when it is done.
  } # else 'tis the parent process, which goes back to accept()
 
 }
@@ -131,10 +134,15 @@ sub write_log() {
  my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst)=localtime(time());
  my $timestamp = sprintf("%02d.%02d.%4d %02d:%02d:%02d",$mday,$mon+1,$year+1900,$hour,$min,$sec);
  print "$timestamp dvr-alarm-server[] " . $_[0] ."\n";
+ 
+}
 
+sub mqtt() {
  $ENV{MQTT_SIMPLE_ALLOW_INSECURE_LOGIN} = 'true';
  my $mqtt = Net::MQTT::Simple->new("localhost");
  $mqtt->login("user","pass");
- $mqtt->retain("home-assistant/camera/movimiento" => "ON");
+ $mqtt->retain("home-assistant/" . $_[0] ."/movimiento" => "ON");
  $mqtt->disconnect();
+ print "Mqtt message entrada send from " . $_[1] ."\n";
 }
+
