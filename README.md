@@ -50,3 +50,23 @@ binary_sensor:
     
     off_delay: 30
     
+# camera or dvr configuracion
+
+![image](https://user-images.githubusercontent.com/34915602/109655607-c1e63380-7b63-11eb-8099-36bad58ba388.png)
+
+Go remote config - system config - services - alarm center
+
+![image](https://user-images.githubusercontent.com/34915602/109655807-fc4fd080-7b63-11eb-9b1e-7a4c588bd918.png)
+
+Add raspberry/linux ip server to send motion alarm, default port 15002
+
+![image](https://user-images.githubusercontent.com/34915602/109656039-446ef300-7b64-11eb-88e9-fd08454b0014.png)
+
+Finally go Alarm - Motion Alarm 
+
+![image](https://user-images.githubusercontent.com/34915602/109656261-86983480-7b64-11eb-9af4-890dece163ec.png)
+
+Enable alarm and check "Exp. Alarma" to send motion alarm to server
+
+
+
