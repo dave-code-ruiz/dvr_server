@@ -52,6 +52,8 @@ binary_sensor:
     
 # camera or dvr configuracion
 
+Camera o DVR config is diferent for each camera, some example is:
+
 ![image](https://user-images.githubusercontent.com/34915602/109655607-c1e63380-7b63-11eb-8099-36bad58ba388.png)
 
 Go remote config - system config - services - alarm center
