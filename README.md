@@ -18,6 +18,10 @@ BESDER-cámara IP
 
 https://es.aliexpress.com/item/32831727674.html?spm=a2g0s.9042311.0.0.c48163c0vJgnYH
 
+TMEZON DoorBell 
+
+https://es.aliexpress.com/item/32790879133.html?spm=a2g0o.search0304.0.0.363b6c07WoTdLB
+
 # Install perl and cpan
 
 sudo apt-get install perl
