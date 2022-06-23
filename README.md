@@ -38,10 +38,6 @@ sudo systemctl start dvralarm.service
 
 https://hub.docker.com/repository/docker/davecoderuiz/dvralarmserver
 
-# Python version
-
-https://github.com/NeiroNx/python-dvr/blob/master/AlarmServer.py
-
 # home assistant configuration.yaml
 
 binary_sensor:
